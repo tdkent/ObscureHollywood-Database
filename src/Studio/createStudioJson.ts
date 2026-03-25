@@ -19,8 +19,12 @@ export default function createStudioJson() {
 	 * Get input and output paths.
 	 */
 	const __dirname = getDirname();
-	const input = path.join(__dirname, "../../../data/csv/Film-Table 1.csv");
-	const outputPath = path.join(__dirname, "../../../data/json/studios");
+	const input = path.join(__dirname, "../../../data/input/Film-Table 1.csv");
+	const jsonOutputPath = path.join(
+		__dirname,
+		"../../../data/output/json/studios",
+	);
+	const csvOutputPath = path.join(__dirname, "../../../data/output/csv");
 
 	/*
 	 * Read the CSV data and parse to JSON.
@@ -71,13 +75,21 @@ export default function createStudioJson() {
 			for (const studio of validatedDataWithSlug) {
 				const stringified = JSON.stringify(studio);
 				fs.writeFile(
-					`${outputPath}/${studio.slug}.json`,
+					`${jsonOutputPath}/${studio.slug}.json`,
 					stringified,
 					(err) => {
 						if (err) console.error(err);
 					},
 				);
 			}
+
+			/*
+			 * Output CSV file with slug column.
+			 */
+			const csv = Papa.unparse(validatedDataWithSlug);
+			fs.writeFile(`${csvOutputPath}/studios.csv`, csv, (err) => {
+				if (err) console.error(err);
+			});
 		},
 	});
 }

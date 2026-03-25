@@ -17,8 +17,12 @@ export default function createPersonJson() {
 	 * Get input and output paths.
 	 */
 	const __dirname = getDirname();
-	const input = path.join(__dirname, "../../../data/csv/Person-Table 1.csv");
-	const outputPath = path.join(__dirname, "../../../data/json/persons");
+	const input = path.join(__dirname, "../../../data/input/Person-Table 1.csv");
+	const jsonOutputPath = path.join(
+		__dirname,
+		"../../../data/output/json/persons",
+	);
+	const csvOutputPath = path.join(__dirname, "../../../data/output/csv");
 
 	/*
 	 * Read the CSV data and parse to JSON.
@@ -69,13 +73,21 @@ export default function createPersonJson() {
 			for (const person of validatedDataWithSlug) {
 				const stringified = JSON.stringify(person);
 				fs.writeFile(
-					`${outputPath}/${person.slug}.json`,
+					`${jsonOutputPath}/${person.slug}.json`,
 					stringified,
 					(err) => {
 						if (err) console.error(err);
 					},
 				);
 			}
+
+			/*
+			 * Output CSV file with slug column.
+			 */
+			const csv = Papa.unparse(validatedDataWithSlug);
+			fs.writeFile(`${csvOutputPath}/persons.csv`, csv, (err) => {
+				if (err) console.error(err);
+			});
 		},
 	});
 }
