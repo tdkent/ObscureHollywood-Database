@@ -36,7 +36,7 @@ export class Person {
 		length: 64,
 		unique: true,
 	})
-	articleSlug: string;
+	slug: string;
 
 	@Column({
 		type: "smallint",

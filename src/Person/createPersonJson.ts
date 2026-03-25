@@ -45,7 +45,7 @@ export default function createPersonJson() {
 				if (!result.success) {
 					console.debug("Validation error in:", person);
 					console.error(result.error);
-					throw new Error(`Validation error`);
+					throw new Error(`Validation error in Person`);
 				}
 
 				const slug = slugify(
