@@ -3,9 +3,9 @@ import path from "path";
 import { fileURLToPath } from "url";
 import type { Article } from "../entity/Article.js";
 import type { Role } from "../entity/PersonFilm.js";
-import type { Studio } from "../entity/Studio.js";
 import type { Film } from "../Film/Film.entity.js";
 import type { Person } from "../Person/Person.entity.js";
+import type { Studio } from "../Studio/Studio.entity.js";
 
 /**
  * Get data from raw JSON files.

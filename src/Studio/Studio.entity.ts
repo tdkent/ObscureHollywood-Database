@@ -7,7 +7,7 @@ import {
 	PrimaryGeneratedColumn,
 	UpdateDateColumn,
 } from "typeorm";
-import { Film, type Film as FilmType } from "./Film.js";
+import { Film, type Film as FilmType } from "../Film/Film.entity.js";
 
 @Entity()
 export class Studio {
