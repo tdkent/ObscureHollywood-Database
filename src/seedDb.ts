@@ -1,15 +1,15 @@
 import "reflect-metadata";
 import { AppDataSource } from "./data-source.js";
 import { Article } from "./entity/Article.js";
-import { Film } from "./entity/Film.js";
-import { Person } from "./entity/Person.js";
 import { PersonFilm } from "./entity/PersonFilm.js";
 import { Studio } from "./entity/Studio.js";
+import { Film } from "./Film/Film.entity.js";
+import FilmSchema from "./Film/Film.schema.js";
 import getData from "./helpers/getData.js";
 import validateData from "./helpers/validateData.js";
+import { Person } from "./Person/Person.entity.js";
+import PersonSchema from "./Person/Person.schema.js";
 import ArticleSchema from "./schema/Article.js";
-import FilmSchema from "./schema/Film.js";
-import PersonSchema from "./schema/Person.js";
 import StudioSchema from "./schema/Studio.js";
 
 AppDataSource.initialize()

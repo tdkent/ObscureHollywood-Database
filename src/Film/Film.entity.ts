@@ -9,9 +9,12 @@ import {
 	PrimaryGeneratedColumn,
 	UpdateDateColumn,
 } from "typeorm";
-import { Article, type Article as ArticleType } from "./Article.js";
-import { PersonFilm, type PersonFilm as PersonFilmType } from "./PersonFilm.js";
-import { Studio, type Studio as StudioType } from "./Studio.js";
+import { Article, type Article as ArticleType } from "../entity/Article.js";
+import {
+	PersonFilm,
+	type PersonFilm as PersonFilmType,
+} from "../entity/PersonFilm.js";
+import { Studio, type Studio as StudioType } from "../entity/Studio.js";
 
 @Entity()
 export class Film {

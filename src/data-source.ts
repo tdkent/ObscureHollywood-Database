@@ -1,9 +1,9 @@
 import { DataSource } from "typeorm";
 import { Article } from "./entity/Article.js";
-import { Film } from "./entity/Film.js";
-import { Person } from "./entity/Person.js";
 import { PersonFilm } from "./entity/PersonFilm.js";
 import { Studio } from "./entity/Studio.js";
+import { Film } from "./Film/Film.entity.js";
+import { Person } from "./Person/Person.entity.js";
 import "dotenv/config";
 
 export const AppDataSource = new DataSource({

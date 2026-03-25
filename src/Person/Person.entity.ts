@@ -8,8 +8,11 @@ import {
 	PrimaryGeneratedColumn,
 	UpdateDateColumn,
 } from "typeorm";
-import { Article, type Article as ArticleType } from "./Article.js";
-import { PersonFilm, type PersonFilm as PersonFilmType } from "./PersonFilm.js";
+import { Article, type Article as ArticleType } from "../entity/Article.js";
+import {
+	PersonFilm,
+	type PersonFilm as PersonFilmType,
+} from "../entity/PersonFilm.js";
 
 @Entity()
 export class Person {

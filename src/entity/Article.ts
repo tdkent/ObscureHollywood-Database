@@ -6,8 +6,8 @@ import {
 	PrimaryGeneratedColumn,
 	UpdateDateColumn,
 } from "typeorm";
-import { Film, type Film as FilmType } from "./Film.js";
-import { Person, type Person as PersonType } from "./Person.js";
+import { Film, type Film as FilmType } from "../Film/Film.entity.js";
+import { Person, type Person as PersonType } from "../Person/Person.entity.js";
 
 export enum Category {
 	FEATURE = "feature",
