@@ -1,0 +1,21 @@
+import { DataSource } from "typeorm";
+import { Article } from "./entity/Article.js";
+import { Film } from "./entity/Film.js";
+import { Person } from "./entity/Person.js";
+import { PersonFilm } from "./entity/PersonFilm.js";
+import { Studio } from "./entity/Studio.js";
+import "dotenv/config";
+
+export const AppDataSource = new DataSource({
+	type: "postgres",
+	host: "localhost",
+	port: 5432,
+	username: "postgres",
+	password: process.env["PG_PASSWORD"] as string,
+	database: "oh-test",
+	synchronize: true,
+	logging: true,
+	entities: [Article, Film, Person, PersonFilm, Studio],
+	subscribers: [],
+	migrations: [],
+});

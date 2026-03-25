@@ -1,0 +1,45 @@
+import {
+	Column,
+	CreateDateColumn,
+	Entity,
+	JoinColumn,
+	OneToMany,
+	PrimaryGeneratedColumn,
+	UpdateDateColumn,
+} from "typeorm";
+import { Film, type Film as FilmType } from "./Film.js";
+
+@Entity()
+export class Studio {
+	@PrimaryGeneratedColumn()
+	id: number;
+
+	@Column({
+		type: "varchar",
+		length: 64,
+		unique: true,
+	})
+	slug: string;
+
+	@Column({
+		type: "varchar",
+		length: 64,
+	})
+	name: string;
+
+	@CreateDateColumn()
+	createdAt: Date;
+
+	@UpdateDateColumn()
+	updatedAt: Date;
+
+	@OneToMany(
+		() => Film,
+		(film) => film.studio,
+		{
+			onDelete: "CASCADE",
+		},
+	)
+	@JoinColumn()
+	films: FilmType[];
+}
