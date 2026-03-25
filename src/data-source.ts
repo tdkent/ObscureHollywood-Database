@@ -1,8 +1,8 @@
 import { DataSource } from "typeorm";
-import { Article } from "./entity/Article.js";
-import { PersonFilm } from "./entity/PersonFilm.js";
+import { Article } from "./Article/Article.entity.js";
 import { Film } from "./Film/Film.entity.js";
 import { Person } from "./Person/Person.entity.js";
+import { PersonFilm } from "./PersonFilm/PersonFilm.entity.js";
 import { Studio } from "./Studio/Studio.entity.js";
 import "dotenv/config";
 

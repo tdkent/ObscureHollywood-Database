@@ -1,10 +1,10 @@
 import fs from "fs";
 import path from "path";
 import { fileURLToPath } from "url";
-import type { Article } from "../entity/Article.js";
-import type { Role } from "../entity/PersonFilm.js";
+import type { Article } from "../Article/Article.entity.js";
 import type { Film } from "../Film/Film.entity.js";
 import type { Person } from "../Person/Person.entity.js";
+import type { Role } from "../PersonFilm/PersonFilm.entity.js";
 import type { Studio } from "../Studio/Studio.entity.js";
 
 /**
