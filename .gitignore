@@ -1,0 +1,10 @@
+# Directories
+node_modules
+dist
+data
+
+# Env
+.env
+
+# Misc
+.DS_Store
