@@ -6,7 +6,7 @@
   "scripts": {
     "build": "tsc",
     "watch": "tsc -w",
-    "db:seed": "node dist/seed.js",
+    "db:seed": "node dist/seedDb.js",
     "db:json": "node dist/createJson.js",
     "format": "npx @biomejs/biome check --write"
   },

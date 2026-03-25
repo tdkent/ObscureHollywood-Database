@@ -8,8 +8,14 @@ import {
 	PrimaryGeneratedColumn,
 	UpdateDateColumn,
 } from "typeorm";
-import { Article, type Article as ArticleType } from "./Article.js";
-import { PersonFilm, type PersonFilm as PersonFilmType } from "./PersonFilm.js";
+import {
+	Article,
+	type Article as ArticleType,
+} from "../Article/Article.entity.js";
+import {
+	PersonFilm,
+	type PersonFilm as PersonFilmType,
+} from "../PersonFilm/PersonFilm.entity.js";
 
 @Entity()
 export class Person {
@@ -33,7 +39,7 @@ export class Person {
 		length: 64,
 		unique: true,
 	})
-	articleSlug: string;
+	slug: string;
 
 	@Column({
 		type: "smallint",
