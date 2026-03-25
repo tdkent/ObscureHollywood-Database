@@ -1,3 +1,4 @@
+import createFilmJson from "./Film/createFilmJson.js";
 import createPersonJson from "./Person/createPersonJson.js";
 
 /**
@@ -5,6 +6,7 @@ import createPersonJson from "./Person/createPersonJson.js";
  */
 function createJson() {
 	createPersonJson();
+	createFilmJson();
 }
 
 createJson();
