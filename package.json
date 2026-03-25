@@ -4,8 +4,10 @@
   "version": "0.0.1",
   "main": "index.ts",
   "scripts": {
-    "dev": "tsc -w",
-    "start": "tsc && node dist/index.js",
+    "build": "tsc",
+    "watch": "tsc -w",
+    "db:seed": "node dist/seed.js",
+    "db:json": "node dist/createJson.js",
     "format": "npx @biomejs/biome check --write"
   },
   "type": "module",
