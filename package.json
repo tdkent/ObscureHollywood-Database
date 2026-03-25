@@ -11,14 +11,17 @@
   "type": "module",
   "dependencies": {
     "dotenv": "^17.3.1",
+    "papaparse": "^5.5.3",
     "pg": "^8.20.0",
     "reflect-metadata": "^0.2.2",
+    "slugify": "^1.6.8",
     "typeorm": "^0.3.28",
     "zod": "^4.3.6"
   },
   "devDependencies": {
     "@biomejs/biome": "2.4.8",
     "@types/node": "^25.5.0",
+    "@types/papaparse": "^5.5.2",
     "typescript": "^5.9.3"
   }
 }
