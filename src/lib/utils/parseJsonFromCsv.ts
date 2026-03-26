@@ -59,7 +59,7 @@ export default function parseJsonFromCsv({
 					throw new Error(`Validation error in Film`);
 				}
 
-				const slug = createSlug({ item: result.data });
+				const slug = createSlug({ item: result.data, label });
 
 				const addSlug = { slug, ...result.data };
 
