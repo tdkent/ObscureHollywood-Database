@@ -2,8 +2,8 @@ import fs from "node:fs";
 import path from "node:path";
 import Papa from "papaparse";
 import type * as z from "zod";
-import slugify from "../imports/slugify.js";
-import type { ParseJsonInputs } from "../types/ParseJsonInputs.js";
+import type { ParseJsonInputs } from "../types.js";
+import createSlug from "./createSlug.js";
 import getDirname from "./getDirname.js";
 
 /**
@@ -59,15 +59,7 @@ export default function parseJsonFromCsv({
 					throw new Error(`Validation error in Film`);
 				}
 
-				// Derive slug parts with a function
-				// const slugParts = getSlugParts({item, schema})
-
-				const slug = slugify("slugParts", {
-					replacement: "-",
-					lower: true,
-					strict: true,
-					trim: true,
-				});
+				const slug = createSlug({ item: result.data });
 
 				const addSlug = { slug, ...result.data };
 
