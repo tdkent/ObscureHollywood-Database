@@ -2,7 +2,6 @@ import * as z from "zod";
 
 const FilmSchema = z.object({
 	name: z.string().max(64),
-	studio: z.string().max(64),
 	releaseYear: z.preprocess((val) => {
 		return Number(val);
 	}, z.int().min(1890).max(2030)),

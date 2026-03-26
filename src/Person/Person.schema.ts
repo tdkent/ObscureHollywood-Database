@@ -3,33 +3,31 @@ import * as z from "zod";
 const PersonSchema = z.object({
 	firstName: z.string().max(32),
 	lastName: z.string().max(32),
-	birthYear: z
-		.preprocess((val) => {
+	birthYear: z.preprocess(
+		(val) => {
 			if (typeof val === "string") {
+				if (!val.length) return null;
 				return Number(val);
 			}
 			return val;
-		}, z.int())
-		.transform((val) => val || null)
-		.optional(),
-	deathYear: z
-		.preprocess((val) => {
+		},
+		z.union([z.int(), z.null()]),
+	),
+	deathYear: z.preprocess(
+		(val) => {
 			if (typeof val === "string") {
+				if (!val.length) return null;
 				return Number(val);
 			}
 			return val;
-		}, z.int())
-		.transform((val) => val || null)
-		.optional(),
+		},
+		z.union([z.int(), z.null()]),
+	),
 	birthLocation: z
-		.string()
-		.max(64)
-		.optional()
+		.union([z.string().max(64), z.null()])
 		.transform((val) => val || null),
 	deathLocation: z
-		.string()
-		.max(64)
-		.optional()
+		.union([z.string().max(64), z.null()])
 		.transform((val) => val || null),
 });
 
