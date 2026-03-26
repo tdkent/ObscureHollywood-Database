@@ -1,3 +1,4 @@
+import ArticleSchema from "./Article/Article.schema.js";
 import FilmSchema from "./Film/Film.schema.js";
 import type { ParseJsonInputs } from "./lib/types.js";
 import parseJsonFromCsv from "./lib/utils/parseJsonFromCsv.js";
@@ -5,6 +6,11 @@ import PersonSchema from "./Person/Person.schema.js";
 import StudioSchema from "./Studio/Studio.schema.js";
 
 const inputs: ParseJsonInputs[] = [
+	{
+		inputCsvName: "Article-Table 1",
+		label: "Article",
+		schema: ArticleSchema,
+	},
 	{
 		inputCsvName: "Film-Table 1",
 		label: "Film",

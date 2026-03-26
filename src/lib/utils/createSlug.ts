@@ -1,4 +1,5 @@
 import type * as z from "zod";
+import ArticleSchema from "../../Article/Article.schema.js";
 import FilmSchema from "../../Film/Film.schema.js";
 import PersonSchema from "../../Person/Person.schema.js";
 import StudioSchema from "../../Studio/Studio.schema.js";
@@ -13,6 +14,14 @@ interface Inputs {
  */
 export default function createSlug({ item }: Inputs) {
 	let slugParts: string;
+
+	/*
+	 * Article schema already contains a slug field.
+	 */
+	if (ArticleSchema.safeParse(item).success) {
+		const article = item as z.infer<typeof ArticleSchema>;
+		return article.slug;
+	}
 
 	if (FilmSchema.safeParse(item).success) {
 		const film = item as z.infer<typeof FilmSchema>;
