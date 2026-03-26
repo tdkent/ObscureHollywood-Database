@@ -3,6 +3,7 @@ import FilmSchema from "./Film/Film.schema.js";
 import type { ParseJsonInputs } from "./lib/types.js";
 import parseJsonFromCsv from "./lib/utils/parseJsonFromCsv.js";
 import PersonSchema from "./Person/Person.schema.js";
+import PersonFilmSchema from "./PersonFilm/PersonFilm.schema.js";
 import StudioSchema from "./Studio/Studio.schema.js";
 
 const inputs: ParseJsonInputs[] = [
@@ -25,6 +26,11 @@ const inputs: ParseJsonInputs[] = [
 		inputCsvName: "Studio-Table 1",
 		label: "Studio",
 		schema: StudioSchema,
+	},
+	{
+		inputCsvName: "PersonFilm-Table 1",
+		label: "PersonFilm",
+		schema: PersonFilmSchema,
 	},
 ];
 
