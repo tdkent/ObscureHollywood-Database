@@ -1,8 +1,8 @@
 import * as z from "zod";
 
 const PersonSchema = z.object({
-	firstName: z.string().max(32),
-	lastName: z.string().max(32),
+	firstName: z.string().min(1).max(32),
+	lastName: z.string().min(1).max(32),
 	birthYear: z.preprocess(
 		(val) => {
 			if (typeof val === "string") {
