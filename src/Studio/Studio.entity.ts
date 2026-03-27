@@ -24,6 +24,7 @@ export class Studio {
 	@Column({
 		type: "varchar",
 		length: 64,
+		unique: true,
 	})
 	name: string;
 

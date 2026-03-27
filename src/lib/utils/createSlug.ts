@@ -3,6 +3,7 @@ import FilmSchema from "../../Film/Film.schema.js";
 import PersonSchema from "../../Person/Person.schema.js";
 import PersonFilmSchema from "../../PersonFilm/PersonFilm.schema.js";
 import StudioSchema from "../../Studio/Studio.schema.js";
+import TagSchema from "../../Tag/Tag.schema.js";
 import slugify from "../imports/slugify.js";
 import type { Labels } from "../types.js";
 
@@ -62,7 +63,7 @@ export default function createSlug({ item, label }: Inputs) {
 		slugParts = `${result.data.filmSlug} ${result.data.personSlug} ${result.data.role}`;
 	}
 
-	if (label === "Studio" || label === "Tag") {
+	if (label === "Studio") {
 		const result = StudioSchema.safeParse(item);
 		if (!result.success) {
 			console.debug(result);
@@ -70,6 +71,16 @@ export default function createSlug({ item, label }: Inputs) {
 		}
 
 		slugParts = result.data.name;
+	}
+
+	if (label === "Tag") {
+		const result = TagSchema.safeParse(item);
+		if (!result.success) {
+			console.debug(result);
+			throw new Error(errMsg);
+		}
+
+		slugParts = `${result.data.type} ${result.data.name}`;
 	}
 
 	const slug = slugify(slugParts, {

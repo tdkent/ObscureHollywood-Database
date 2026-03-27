@@ -1,4 +1,10 @@
-import { Column, Entity, ManyToMany, PrimaryGeneratedColumn } from "typeorm";
+import {
+	Column,
+	Entity,
+	ManyToMany,
+	PrimaryGeneratedColumn,
+	Unique,
+} from "typeorm";
 import {
 	Article,
 	type Article as ArticleType,
@@ -12,6 +18,7 @@ enum Type {
 }
 
 @Entity()
+@Unique(["name", "type"])
 export class Tag {
 	@PrimaryGeneratedColumn()
 	id: number;
