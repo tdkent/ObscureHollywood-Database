@@ -43,7 +43,7 @@ AppDataSource.initialize()
 
 		const articlesWithId = await articleRepository.find();
 		const studiosWithId = await studioRepository.find();
-		const tagsWithId = await tagRepository.find();
+		await tagRepository.find();
 
 		/*
 		 * Add relations to Film and insert into database.

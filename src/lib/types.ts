@@ -2,6 +2,7 @@ import type * as z from "zod";
 
 export type Labels =
 	| "Article"
+	| "ArticleTag"
 	| "Film"
 	| "Person"
 	| "PersonFilm"
