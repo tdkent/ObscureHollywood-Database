@@ -21,6 +21,18 @@ export class PersonFilm {
 	@PrimaryGeneratedColumn()
 	id: number;
 
+	@Column({
+		type: "enum",
+		enum: Role,
+	})
+	role: Role;
+
+	@Column({
+		type: "smallint",
+		nullable: true,
+	})
+	castPosition: number;
+
 	@ManyToOne(
 		() => Person,
 		(person) => person.personFilms,
@@ -40,16 +52,4 @@ export class PersonFilm {
 	)
 	@JoinColumn()
 	film: FilmType;
-
-	@Column({
-		type: "enum",
-		enum: Role,
-	})
-	role: Role;
-
-	@Column({
-		type: "smallint",
-		nullable: true,
-	})
-	castPosition: number;
 }

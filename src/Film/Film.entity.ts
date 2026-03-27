@@ -27,15 +27,15 @@ export class Film {
 	@Column({
 		type: "varchar",
 		length: 64,
+		unique: true,
 	})
-	name: string;
+	slug: string;
 
 	@Column({
 		type: "varchar",
 		length: 64,
-		unique: true,
 	})
-	slug: string;
+	name: string;
 
 	@Column({
 		type: "smallint",

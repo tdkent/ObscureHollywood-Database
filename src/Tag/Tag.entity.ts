@@ -1,4 +1,8 @@
-import { Column, Entity, PrimaryGeneratedColumn } from "typeorm";
+import { Column, Entity, ManyToMany, PrimaryGeneratedColumn } from "typeorm";
+import {
+	Article,
+	type Article as ArticleType,
+} from "../Article/Article.entity.js";
 
 enum Type {
 	DECADE = "decade",
@@ -15,19 +19,25 @@ export class Tag {
 	@Column({
 		type: "varchar",
 		length: 32,
+		unique: true,
 	})
-	name: string;
+	slug: string;
 
 	@Column({
 		type: "varchar",
 		length: 32,
-		unique: true,
 	})
-	slug: string;
+	name: string;
 
 	@Column({
 		type: "enum",
 		enum: Type,
 	})
 	type: Type;
+
+	@ManyToMany(
+		() => Article,
+		(article) => article.tags,
+	)
+	articles: ArticleType[];
 }

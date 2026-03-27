@@ -2,12 +2,15 @@ import {
 	Column,
 	CreateDateColumn,
 	Entity,
+	JoinTable,
+	ManyToMany,
 	OneToOne,
 	PrimaryGeneratedColumn,
 	UpdateDateColumn,
 } from "typeorm";
 import { Film, type Film as FilmType } from "../Film/Film.entity.js";
 import { Person, type Person as PersonType } from "../Person/Person.entity.js";
+import { Tag, type Tag as TagType } from "../Tag/Tag.entity.js";
 
 export enum Category {
 	FEATURE = "feature",
@@ -21,17 +24,17 @@ export class Article {
 	id: number;
 
 	@Column({
-		type: "enum",
-		enum: Category,
-	})
-	category: Category;
-
-	@Column({
 		type: "varchar",
 		length: 64,
 		unique: true,
 	})
 	slug: string;
+
+	@Column({
+		type: "enum",
+		enum: Category,
+	})
+	category: Category;
 
 	@Column({
 		type: "text",
@@ -60,4 +63,11 @@ export class Article {
 		(person) => person.article,
 	)
 	person: PersonType;
+
+	@ManyToMany(
+		() => Tag,
+		(tag) => tag.articles,
+	)
+	@JoinTable()
+	tags: TagType[];
 }
