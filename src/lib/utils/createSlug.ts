@@ -17,6 +17,8 @@ interface Inputs {
 export default function createSlug({ item, label }: Inputs) {
 	let slugParts: string = "";
 
+	const errMsg = `Error validating ${label} in createSlug function!`;
+
 	/*
 	 * Article schema already contains a slug field.
 	 */
@@ -24,7 +26,7 @@ export default function createSlug({ item, label }: Inputs) {
 		const result = ArticleSchema.safeParse(item);
 		if (!result.success) {
 			console.debug(result);
-			throw new Error("Error validating Article");
+			throw new Error(errMsg);
 		}
 
 		return result.data.slug;
@@ -34,7 +36,7 @@ export default function createSlug({ item, label }: Inputs) {
 		const result = FilmSchema.safeParse(item);
 		if (!result.success) {
 			console.debug(result);
-			throw new Error("Error validating Film");
+			throw new Error(errMsg);
 		}
 
 		slugParts = `${result.data.name} ${result.data.releaseYear}`;
@@ -44,7 +46,7 @@ export default function createSlug({ item, label }: Inputs) {
 		const result = PersonSchema.safeParse(item);
 		if (!result.success) {
 			console.debug(result);
-			throw new Error("Error validating Person");
+			throw new Error(errMsg);
 		}
 
 		slugParts = `${result.data.firstName} ${result.data.lastName}`;
@@ -54,17 +56,17 @@ export default function createSlug({ item, label }: Inputs) {
 		const result = PersonFilmSchema.safeParse(item);
 		if (!result.success) {
 			console.debug(result);
-			throw new Error("Error validating PersonFilm");
+			throw new Error(errMsg);
 		}
 
 		slugParts = `${result.data.filmSlug} ${result.data.personSlug} ${result.data.role}`;
 	}
 
-	if (label === "Studio") {
+	if (label === "Studio" || label === "Tag") {
 		const result = StudioSchema.safeParse(item);
 		if (!result.success) {
 			console.debug(result);
-			throw new Error("Error validating Studio");
+			throw new Error(errMsg);
 		}
 
 		slugParts = result.data.name;
