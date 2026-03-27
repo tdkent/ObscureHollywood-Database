@@ -47,6 +47,11 @@ export class Film {
 	})
 	isSilent: boolean;
 
+	@Column({
+		type: "boolean",
+	})
+	isPreCode: boolean;
+
 	@CreateDateColumn()
 	createdAt: Date;
 
