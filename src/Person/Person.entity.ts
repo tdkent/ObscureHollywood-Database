@@ -24,6 +24,13 @@ export class Person {
 
 	@Column({
 		type: "varchar",
+		length: 64,
+		unique: true,
+	})
+	slug: string;
+
+	@Column({
+		type: "varchar",
 		length: 32,
 	})
 	firstName: string;
@@ -33,13 +40,6 @@ export class Person {
 		length: 32,
 	})
 	lastName: string;
-
-	@Column({
-		type: "varchar",
-		length: 64,
-		unique: true,
-	})
-	slug: string;
 
 	@Column({
 		type: "smallint",

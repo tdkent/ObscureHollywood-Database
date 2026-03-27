@@ -6,10 +6,12 @@ import getJsonData from "./lib/utils/getJsonData.js";
 import { Person } from "./Person/Person.entity.js";
 import { PersonFilm } from "./PersonFilm/PersonFilm.entity.js";
 import { Studio } from "./Studio/Studio.entity.js";
+import { Tag } from "./Tag/Tag.entity.js";
 
 AppDataSource.initialize()
 	.then(async () => {
-		const { articles, films, persons, personFilm, studios } = getJsonData();
+		const { articles, films, persons, personFilm, studios, tags } =
+			getJsonData();
 
 		/*
 		 * Get database repositories.
@@ -19,6 +21,7 @@ AppDataSource.initialize()
 		const studioRepository = AppDataSource.getRepository(Studio);
 		const personRepository = AppDataSource.getRepository(Person);
 		const personFilmRepository = AppDataSource.getRepository(PersonFilm);
+		const tagRepository = AppDataSource.getRepository(Tag);
 
 		/*
 		 * Clear all database entries.
@@ -26,6 +29,7 @@ AppDataSource.initialize()
 		await AppDataSource.query(
 			"TRUNCATE TABLE studio RESTART IDENTITY CASCADE;",
 		);
+		await AppDataSource.query("TRUNCATE TABLE tag RESTART IDENTITY CASCADE;");
 		await AppDataSource.query(
 			"TRUNCATE TABLE article RESTART IDENTITY CASCADE;",
 		);
@@ -35,9 +39,11 @@ AppDataSource.initialize()
 		 */
 		await articleRepository.save(articles);
 		await studioRepository.save(studios);
+		await tagRepository.save(tags);
 
 		const articlesWithId = await articleRepository.find();
 		const studiosWithId = await studioRepository.find();
+		const tagsWithId = await tagRepository.find();
 
 		/*
 		 * Add relations to Film and insert into database.

@@ -5,6 +5,7 @@ import { Person } from "./Person/Person.entity.js";
 import { PersonFilm } from "./PersonFilm/PersonFilm.entity.js";
 import { Studio } from "./Studio/Studio.entity.js";
 import "dotenv/config";
+import { Tag } from "./Tag/Tag.entity.js";
 
 export const AppDataSource = new DataSource({
 	type: "postgres",
@@ -15,7 +16,7 @@ export const AppDataSource = new DataSource({
 	database: "oh-test",
 	synchronize: true,
 	logging: true,
-	entities: [Article, Film, Person, PersonFilm, Studio],
+	entities: [Article, Film, Person, PersonFilm, Studio, Tag],
 	subscribers: [],
 	migrations: [],
 });
