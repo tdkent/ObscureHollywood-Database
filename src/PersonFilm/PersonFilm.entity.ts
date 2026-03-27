@@ -46,4 +46,10 @@ export class PersonFilm {
 		enum: Role,
 	})
 	role: Role;
+
+	@Column({
+		type: "smallint",
+		nullable: true,
+	})
+	castPosition: number;
 }

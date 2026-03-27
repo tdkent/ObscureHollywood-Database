@@ -1,105 +1,98 @@
-// import "reflect-metadata";
-// import { AppDataSource } from "./data-source.js";
-// import { Article } from "./entity/Article.js";
-// import { PersonFilm } from "./entity/PersonFilm.js";
-// import { Studio } from "./entity/Studio.js";
-// import { Film } from "./Film/Film.entity.js";
-// import FilmSchema from "./Film/Film.schema.js";
-// import getData from "./helpers/getData.js";
-// import validateData from "./helpers/validateData.js";
-// import { Person } from "./Person/Person.entity.js";
-// import PersonSchema from "./Person/Person.schema.js";
-// import ArticleSchema from "./schema/Article.js";
-// import StudioSchema from "./schema/Studio.js";
+import "reflect-metadata";
+import { Article } from "./Article/Article.entity.js";
+import { AppDataSource } from "./data-source.js";
+import { Film } from "./Film/Film.entity.js";
+import getJsonData from "./lib/utils/getJsonData.js";
+import { Person } from "./Person/Person.entity.js";
+import { PersonFilm } from "./PersonFilm/PersonFilm.entity.js";
+import { Studio } from "./Studio/Studio.entity.js";
 
-// AppDataSource.initialize()
-// 	.then(async () => {
-// 		/*
-// 		 * Get data from JSON.
-// 		 */
-// 		const { articles, films, persons, personFilm, studios } = getData();
+AppDataSource.initialize()
+	.then(async () => {
+		const { articles, films, persons, personFilm, studios } = getJsonData();
 
-// 		/*
-// 		 * Validate data.
-// 		 */
-// 		validateData<Article>(articles, ArticleSchema, "article");
-// 		validateData<Film>(films, FilmSchema, "film");
-// 		validateData<Studio>(studios, StudioSchema, "studio");
-// 		validateData<Person>(persons, PersonSchema, "person");
+		/*
+		 * Get database repositories.
+		 */
+		const articleRepository = AppDataSource.getRepository(Article);
+		const filmRepository = AppDataSource.getRepository(Film);
+		const studioRepository = AppDataSource.getRepository(Studio);
+		const personRepository = AppDataSource.getRepository(Person);
+		const personFilmRepository = AppDataSource.getRepository(PersonFilm);
 
-// 		/*
-// 		 * Database repositories
-// 		 */
-// 		const articleRepository = AppDataSource.getRepository(Article);
-// 		const filmRepository = AppDataSource.getRepository(Film);
-// 		const studioRepository = AppDataSource.getRepository(Studio);
-// 		const personRepository = AppDataSource.getRepository(Person);
-// 		const personFilmRepository = AppDataSource.getRepository(PersonFilm);
+		/*
+		 * Clear all database entries.
+		 */
+		await AppDataSource.query(
+			"TRUNCATE TABLE studio RESTART IDENTITY CASCADE;",
+		);
+		await AppDataSource.query(
+			"TRUNCATE TABLE article RESTART IDENTITY CASCADE;",
+		);
 
-// 		/*
-// 		 * Cascade delete from database
-// 		 */
-// 		await AppDataSource.query(
-// 			"TRUNCATE TABLE studio RESTART IDENTITY CASCADE;",
-// 		);
-// 		await AppDataSource.query(
-// 			"TRUNCATE TABLE article RESTART IDENTITY CASCADE;",
-// 		);
+		/*
+		 * Insert and retrieve data w/o relations.
+		 */
+		await articleRepository.save(articles);
+		await studioRepository.save(studios);
 
-// 		/*
-// 		 * Insert articles into db, then get articles.
-// 		 */
-// 		await articleRepository.save(articles);
-// 		const articlesWithId = await articleRepository.find();
+		const articlesWithId = await articleRepository.find();
+		const studiosWithId = await studioRepository.find();
 
-// 		/*
-// 		 * Insert studios into db, then get studios.
-// 		 */
-// 		await studioRepository.save(studios);
-// 		const studiosWithId = await studioRepository.find();
+		/*
+		 * Add relations to Film and insert into database.
+		 */
+		const filmsWithRelations = films
+			.map((film) => {
+				const article = articlesWithId.find(
+					(article) => article.slug === film.slug,
+				);
+				if (article) return { ...film, article };
+				return film;
+			})
+			.map((film) => {
+				const studio = studiosWithId.find(
+					(studio) => studio.slug === film.studioSlug,
+				);
+				if (studio) return { ...film, studio };
+				return film;
+			});
 
-// 		/*
-// 		 * Insert persons into db, then get studios.
-// 		 */
-// 		await personRepository.save(persons);
-// 		const personsWithId = await personRepository.find();
+		await filmRepository.save(filmsWithRelations);
+		const filmsWithId = await filmRepository.find();
 
-// 		/*
-// 		 * Add article and studio entities to each film.
-// 		 */
-// 		const filmsWithRelations = films
-// 			.map((film) => {
-// 				const article = articlesWithId.find(
-// 					(article) => article.slug === film.articleSlug,
-// 				);
-// 				if (article) return { ...film, article };
-// 				return film;
-// 			})
-// 			.map((film) => {
-// 				const studio = studiosWithId.find(
-// 					(studio) => studio.slug === film.studioSlug,
-// 				);
-// 				if (studio) return { ...film, studio };
-// 				return film;
-// 			});
+		/*
+		 * Add relations to Person and insert into database.
+		 */
+		const personsWithRelations = persons.map((person) => {
+			const article = articlesWithId.find(
+				(article) => article.slug === person.slug,
+			);
+			if (article) return { ...person, article };
+			return person;
+		});
 
-// 		/*
-// 		 * Insert films into db, then get films.
-// 		 */
-// 		await filmRepository.save(filmsWithRelations);
-// 		const filmsWithId = await filmRepository.find();
+		await personRepository.save(personsWithRelations);
+		const personsWithId = await personRepository.find();
 
-// 		const personFilmWithRelations = personFilm.map((file) => {
-// 			const person = personsWithId.find(
-// 				(person) => person.articleSlug === file.articleSlug,
-// 			);
-// 			const film = filmsWithId.find(
-// 				(film) => film.articleSlug === file.filmSlug,
-// 			);
-// 			if (person && film) return { person, film, role: file.role };
-// 			return file;
-// 		});
+		/*
+		 * Add relations to PersonFilm join table and insert into database.
+		 */
+		const personFilmWithRelations = personFilm.map((file) => {
+			const person = personsWithId.find(
+				(person) => person.slug === file.personSlug,
+			);
+			const film = filmsWithId.find((film) => film.slug === file.filmSlug);
+			if (person && film)
+				return {
+					person,
+					film,
+					role: file.role,
+					castPosition: file.castPosition,
+				};
+			return file;
+		});
 
-// 		await personFilmRepository.save(personFilmWithRelations);
-// 	})
-// 	.catch((error) => console.log("Error: ", error));
+		await personFilmRepository.save(personFilmWithRelations);
+	})
+	.catch((error) => console.log("Error: ", error));

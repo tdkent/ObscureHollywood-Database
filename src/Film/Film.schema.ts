@@ -13,6 +13,7 @@ const FilmSchema = z.object({
 		}
 		return val;
 	}, z.boolean()),
+	studioSlug: z.string().min(1).max(64).optional(),
 });
 
 export default FilmSchema;

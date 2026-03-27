@@ -17,15 +17,15 @@ export class Studio {
 	@Column({
 		type: "varchar",
 		length: 64,
-		unique: true,
 	})
-	slug: string;
+	name: string;
 
 	@Column({
 		type: "varchar",
 		length: 64,
+		unique: true,
 	})
-	name: string;
+	slug: string;
 
 	@CreateDateColumn()
 	createdAt: Date;
