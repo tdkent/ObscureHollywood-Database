@@ -1,5 +1,6 @@
 import "reflect-metadata";
 import { Article } from "./Article/Article.entity.js";
+import { ArticleTag } from "./ArticleTag/ArticleTag.entity.js";
 import { AppDataSource } from "./data-source.js";
 import { Film } from "./Film/Film.entity.js";
 import getJsonData from "./lib/utils/getJsonData.js";
@@ -10,13 +11,17 @@ import { Tag } from "./Tag/Tag.entity.js";
 
 AppDataSource.initialize()
 	.then(async () => {
-		const { articles, films, persons, personFilm, studios, tags } =
+		/*
+		 * Get raw JSON data files.
+		 */
+		const { articles, articleTag, films, persons, personFilm, studios, tags } =
 			getJsonData();
 
 		/*
 		 * Get database repositories.
 		 */
 		const articleRepository = AppDataSource.getRepository(Article);
+		const articleTagRepository = AppDataSource.getRepository(ArticleTag);
 		const filmRepository = AppDataSource.getRepository(Film);
 		const studioRepository = AppDataSource.getRepository(Studio);
 		const personRepository = AppDataSource.getRepository(Person);
@@ -43,7 +48,25 @@ AppDataSource.initialize()
 
 		const articlesWithId = await articleRepository.find();
 		const studiosWithId = await studioRepository.find();
-		await tagRepository.find();
+		const tagsWithId = await tagRepository.find();
+
+		/*
+		 * Add relations to ArticleTag join table and insert into database.
+		 */
+		const articleTagWithRelations = articleTag.map((file) => {
+			const article = articlesWithId.find(
+				(article) => article.slug === file.articleSlug,
+			);
+			const tag = tagsWithId.find((tag) => tag.slug === file.tagSlug);
+			if (article && tag) {
+				return { article, tag };
+			}
+
+			console.debug(article, tag);
+			throw new Error("Error creating ArticleTag relation!");
+		});
+
+		await articleTagRepository.save(articleTagWithRelations);
 
 		/*
 		 * Add relations to Film and insert into database.
@@ -91,12 +114,12 @@ AppDataSource.initialize()
 			const film = filmsWithId.find((film) => film.slug === file.filmSlug);
 			if (person && film)
 				return {
+					...file,
 					person,
 					film,
-					role: file.role,
-					castPosition: file.castPosition,
 				};
-			return file;
+			console.debug(person, film);
+			throw new Error("Error creating PersonFilm relation!");
 		});
 
 		await personFilmRepository.save(personFilmWithRelations);
