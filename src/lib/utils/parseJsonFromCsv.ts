@@ -87,6 +87,8 @@ export default function parseJsonFromCsv({
 			fs.writeFile(`${csvOutputPath}/${label}.csv`, csv, (err) => {
 				if (err) console.error(err);
 			});
+
+			console.log(`Finished creating ${label} JSON and CSV data!`);
 		},
 	});
 }

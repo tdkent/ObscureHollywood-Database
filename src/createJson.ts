@@ -3,6 +3,7 @@ import ArticleTagSchema from "./ArticleTag/ArticleTag.schema.js";
 import FilmSchema from "./Film/Film.schema.js";
 import type { ParseJsonInputs } from "./lib/types.js";
 import parseJsonFromCsv from "./lib/utils/parseJsonFromCsv.js";
+import resetOutput from "./lib/utils/resetOutput.js";
 import PersonSchema from "./Person/Person.schema.js";
 import PersonFilmSchema from "./PersonFilm/PersonFilm.schema.js";
 import StudioSchema from "./Studio/Studio.schema.js";
@@ -49,7 +50,9 @@ const inputs: ParseJsonInputs[] = [
 /**
  * Generate JSON db files from CSV.
  */
-function createJson() {
+async function createJson() {
+	await resetOutput();
+
 	inputs.forEach(({ inputCsvName, label, schema }) => {
 		parseJsonFromCsv({ inputCsvName, label, schema });
 	});
