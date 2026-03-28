@@ -1,8 +1,8 @@
-import { Column, Entity, ManyToMany, PrimaryGeneratedColumn } from "typeorm";
+import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from "typeorm";
 import {
-	Article,
-	type Article as ArticleType,
-} from "../Article/Article.entity.js";
+	ArticleTag,
+	type ArticleTag as ArticleTagType,
+} from "../ArticleTag/ArticleTag.entity.js";
 
 enum Type {
 	DECADE = "decade",
@@ -35,9 +35,9 @@ export class Tag {
 	})
 	type: Type;
 
-	@ManyToMany(
-		() => Article,
-		(article) => article.tags,
+	@OneToMany(
+		() => ArticleTag,
+		(articleTag) => articleTag.tag,
 	)
-	articles: ArticleType[];
+	articleTags: ArticleTagType[];
 }

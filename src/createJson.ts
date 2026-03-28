@@ -1,4 +1,5 @@
 import ArticleSchema from "./Article/Article.schema.js";
+import ArticleTagSchema from "./ArticleTag/ArticleTag.schema.js";
 import FilmSchema from "./Film/Film.schema.js";
 import type { ParseJsonInputs } from "./lib/types.js";
 import parseJsonFromCsv from "./lib/utils/parseJsonFromCsv.js";
@@ -37,6 +38,11 @@ const inputs: ParseJsonInputs[] = [
 		inputCsvName: "Tag-Table 1",
 		label: "Tag",
 		schema: TagSchema,
+	},
+	{
+		inputCsvName: "ArticleTag-Table 1",
+		label: "ArticleTag",
+		schema: ArticleTagSchema,
 	},
 ];
 

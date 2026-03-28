@@ -1,6 +1,7 @@
 import fs from "node:fs";
 import path from "node:path";
 import type { Article } from "../../Article/Article.entity.js";
+import type { ArticleTag } from "../../ArticleTag/ArticleTag.entity.js";
 import type { Film } from "../../Film/Film.entity.js";
 import type { Person } from "../../Person/Person.entity.js";
 import type { PersonFilm } from "../../PersonFilm/PersonFilm.entity.js";
@@ -22,6 +23,7 @@ export default function getJsonData() {
 	const folderPath = "../../../data/output/json";
 
 	const articlesFolder = path.join(__dirname, `${folderPath}/Article`);
+	const articleTagFolder = path.join(__dirname, `${folderPath}/ArticleTag`);
 	const filmsFolder = path.join(__dirname, `${folderPath}/Film`);
 	const studiosFolder = path.join(__dirname, `${folderPath}/Studio`);
 	const personsFolder = path.join(__dirname, `${folderPath}/Person`);
@@ -32,6 +34,7 @@ export default function getJsonData() {
 	 * Get JSON files from folders
 	 */
 	const articleFiles = fs.readdirSync(articlesFolder);
+	const articleTagFiles = fs.readdirSync(articleTagFolder);
 	const filmFiles = fs.readdirSync(filmsFolder);
 	const studioFiles = fs.readdirSync(studiosFolder);
 	const personFiles = fs.readdirSync(personsFolder);
@@ -46,6 +49,12 @@ export default function getJsonData() {
 		const raw = fs.readFileSync(filePath, "utf-8");
 		return JSON.parse(raw);
 	});
+	const articleTag: (ArticleTag & { articleSlug: string; tagSlug: string })[] =
+		articleTagFiles.map((file) => {
+			const filePath = path.join(articleTagFolder, file);
+			const raw = fs.readFileSync(filePath, "utf-8");
+			return JSON.parse(raw);
+		});
 	const films: (Film & { studioSlug: string })[] = filmFiles.map((file) => {
 		const filePath = path.join(filmsFolder, file);
 		const raw = fs.readFileSync(filePath, "utf-8");
@@ -73,5 +82,5 @@ export default function getJsonData() {
 		return JSON.parse(raw);
 	});
 
-	return { articles, films, persons, personFilm, studios, tags };
+	return { articles, articleTag, films, persons, personFilm, studios, tags };
 }
