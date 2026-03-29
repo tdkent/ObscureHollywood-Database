@@ -1,6 +1,7 @@
 import fs from "node:fs";
 import path from "node:path";
 import type { Article } from "../../Article/Article.entity.js";
+import type { ArticleRelation } from "../../ArticleRelation/ArticleRelation.entity.js";
 import type { ArticleTag } from "../../ArticleTag/ArticleTag.entity.js";
 import type { Feature } from "../../Feature/Feature.entity.js";
 import type { Film } from "../../Film/Film.entity.js";
@@ -24,6 +25,10 @@ export default function getJsonData() {
 	const folderPath = "../../../data/output/json";
 
 	const articlesFolder = path.join(__dirname, `${folderPath}/Article`);
+	const articleRelationFolder = path.join(
+		__dirname,
+		`${folderPath}/ArticleRelation`,
+	);
 	const articleTagFolder = path.join(__dirname, `${folderPath}/ArticleTag`);
 	const featuresFolder = path.join(__dirname, `${folderPath}/Feature`);
 	const filmsFolder = path.join(__dirname, `${folderPath}/Film`);
@@ -36,6 +41,7 @@ export default function getJsonData() {
 	 * Get JSON files from folders
 	 */
 	const articleFiles = fs.readdirSync(articlesFolder);
+	const articleRelationFiles = fs.readdirSync(articleRelationFolder);
 	const articleTagFiles = fs.readdirSync(articleTagFolder);
 	const featureFiles = fs.readdirSync(featuresFolder);
 	const filmFiles = fs.readdirSync(filmsFolder);
@@ -49,6 +55,14 @@ export default function getJsonData() {
 	 */
 	const articles: Article[] = articleFiles.map((file) => {
 		const filePath = path.join(articlesFolder, file);
+		const raw = fs.readFileSync(filePath, "utf-8");
+		return JSON.parse(raw);
+	});
+	const articleRelation: (ArticleRelation & {
+		articleSlug: string;
+		relatedArticleSlug: string;
+	})[] = articleRelationFiles.map((file) => {
+		const filePath = path.join(articleRelationFolder, file);
 		const raw = fs.readFileSync(filePath, "utf-8");
 		return JSON.parse(raw);
 	});
@@ -92,6 +106,7 @@ export default function getJsonData() {
 
 	return {
 		articles,
+		articleRelation,
 		articleTag,
 		features,
 		films,
