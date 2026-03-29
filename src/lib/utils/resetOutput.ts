@@ -14,6 +14,7 @@ export default async function resetOutput() {
 		"csv",
 		"json/Article",
 		"json/ArticleTag",
+		"json/Feature",
 		"json/Film",
 		"json/Person",
 		"json/PersonFilm",

@@ -2,6 +2,7 @@ import fs from "node:fs";
 import path from "node:path";
 import type { Article } from "../../Article/Article.entity.js";
 import type { ArticleTag } from "../../ArticleTag/ArticleTag.entity.js";
+import type { Feature } from "../../Feature/Feature.entity.js";
 import type { Film } from "../../Film/Film.entity.js";
 import type { Person } from "../../Person/Person.entity.js";
 import type { PersonFilm } from "../../PersonFilm/PersonFilm.entity.js";
@@ -24,6 +25,7 @@ export default function getJsonData() {
 
 	const articlesFolder = path.join(__dirname, `${folderPath}/Article`);
 	const articleTagFolder = path.join(__dirname, `${folderPath}/ArticleTag`);
+	const featuresFolder = path.join(__dirname, `${folderPath}/Feature`);
 	const filmsFolder = path.join(__dirname, `${folderPath}/Film`);
 	const studiosFolder = path.join(__dirname, `${folderPath}/Studio`);
 	const personsFolder = path.join(__dirname, `${folderPath}/Person`);
@@ -35,6 +37,7 @@ export default function getJsonData() {
 	 */
 	const articleFiles = fs.readdirSync(articlesFolder);
 	const articleTagFiles = fs.readdirSync(articleTagFolder);
+	const featureFiles = fs.readdirSync(featuresFolder);
 	const filmFiles = fs.readdirSync(filmsFolder);
 	const studioFiles = fs.readdirSync(studiosFolder);
 	const personFiles = fs.readdirSync(personsFolder);
@@ -55,6 +58,11 @@ export default function getJsonData() {
 			const raw = fs.readFileSync(filePath, "utf-8");
 			return JSON.parse(raw);
 		});
+	const features: Feature[] = featureFiles.map((file) => {
+		const filePath = path.join(featuresFolder, file);
+		const raw = fs.readFileSync(filePath, "utf-8");
+		return JSON.parse(raw);
+	});
 	const films: (Film & { studioSlug: string })[] = filmFiles.map((file) => {
 		const filePath = path.join(filmsFolder, file);
 		const raw = fs.readFileSync(filePath, "utf-8");
@@ -82,5 +90,14 @@ export default function getJsonData() {
 		return JSON.parse(raw);
 	});
 
-	return { articles, articleTag, films, persons, personFilm, studios, tags };
+	return {
+		articles,
+		articleTag,
+		features,
+		films,
+		persons,
+		personFilm,
+		studios,
+		tags,
+	};
 }
