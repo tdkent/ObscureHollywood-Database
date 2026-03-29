@@ -7,6 +7,7 @@ import {
 	PrimaryGeneratedColumn,
 	UpdateDateColumn,
 } from "typeorm";
+import { ArticleRelation } from "../ArticleRelation/ArticleRelation.entity.js";
 import {
 	ArticleTag,
 	type ArticleTag as ArticleTagType,
@@ -71,4 +72,16 @@ export class Article {
 		(articleTag) => articleTag.article,
 	)
 	articleTags: ArticleTagType[];
+
+	@OneToMany(
+		() => ArticleRelation,
+		(ar) => ar.article,
+	)
+	outgoingRelations: ArticleRelation[];
+
+	@OneToMany(
+		() => ArticleRelation,
+		(ar) => ar.relatedArticle,
+	)
+	incomingRelations: ArticleRelation[];
 }

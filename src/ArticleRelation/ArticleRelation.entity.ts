@@ -1,0 +1,34 @@
+import {
+	Entity,
+	JoinColumn,
+	ManyToOne,
+	PrimaryGeneratedColumn,
+	Unique,
+} from "typeorm";
+import {
+	Article,
+	type Article as ArticleType,
+} from "../Article/Article.entity.js";
+
+@Entity()
+@Unique(["article", "relatedArticle"])
+export class ArticleRelation {
+	@PrimaryGeneratedColumn()
+	id: number;
+
+	@ManyToOne(
+		() => Article,
+		(article) => article.id,
+		{ onDelete: "CASCADE" },
+	)
+	@JoinColumn()
+	article: ArticleType;
+
+	@ManyToOne(
+		() => Article,
+		(article) => article.id,
+		{ onDelete: "CASCADE" },
+	)
+	@JoinColumn()
+	relatedArticle: ArticleType;
+}
