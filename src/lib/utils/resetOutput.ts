@@ -13,6 +13,7 @@ export default async function resetOutput() {
 	const dirs = [
 		"csv",
 		"json/Article",
+		"json/ArticleRelation",
 		"json/ArticleTag",
 		"json/Feature",
 		"json/Film",
