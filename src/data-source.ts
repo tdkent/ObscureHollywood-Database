@@ -6,6 +6,7 @@ import { PersonFilm } from "./PersonFilm/PersonFilm.entity.js";
 import { Studio } from "./Studio/Studio.entity.js";
 import "dotenv/config";
 import { ArticleTag } from "./ArticleTag/ArticleTag.entity.js";
+import { Feature } from "./Feature/Feature.entity.js";
 import { Tag } from "./Tag/Tag.entity.js";
 
 export const AppDataSource = new DataSource({
@@ -17,7 +18,16 @@ export const AppDataSource = new DataSource({
 	database: "oh-test",
 	synchronize: true,
 	logging: true,
-	entities: [Article, ArticleTag, Film, Person, PersonFilm, Studio, Tag],
+	entities: [
+		Article,
+		ArticleTag,
+		Feature,
+		Film,
+		Person,
+		PersonFilm,
+		Studio,
+		Tag,
+	],
 	subscribers: [],
 	migrations: [],
 });
