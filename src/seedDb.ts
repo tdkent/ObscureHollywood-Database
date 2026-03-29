@@ -1,5 +1,6 @@
 import "reflect-metadata";
 import { Article } from "./Article/Article.entity.js";
+import { ArticleRelation } from "./ArticleRelation/ArticleRelation.entity.js";
 import { ArticleTag } from "./ArticleTag/ArticleTag.entity.js";
 import { AppDataSource } from "./data-source.js";
 import { Feature } from "./Feature/Feature.entity.js";
@@ -17,6 +18,7 @@ AppDataSource.initialize()
 		 */
 		const {
 			articles,
+			articleRelation,
 			articleTag,
 			features,
 			films,
@@ -26,10 +28,14 @@ AppDataSource.initialize()
 			tags,
 		} = getJsonData();
 
+		console.log("articlerelation", articleRelation);
+
 		/*
 		 * Get database repositories.
 		 */
 		const articleRepository = AppDataSource.getRepository(Article);
+		const articleRelationRepository =
+			AppDataSource.getRepository(ArticleRelation);
 		const articleTagRepository = AppDataSource.getRepository(ArticleTag);
 		const featureRepository = AppDataSource.getRepository(Feature);
 		const filmRepository = AppDataSource.getRepository(Film);
@@ -59,6 +65,26 @@ AppDataSource.initialize()
 		const articlesWithId = await articleRepository.find();
 		const studiosWithId = await studioRepository.find();
 		const tagsWithId = await tagRepository.find();
+
+		/*
+		 * Add relations to ArticleRelation join table and insert into database.
+		 */
+		const articleWithRelations = articleRelation.map((file) => {
+			const article = articlesWithId.find(
+				(article) => article.slug === file.articleSlug,
+			);
+			const relatedArticle = articlesWithId.find(
+				(article) => article.slug === file.relatedArticleSlug,
+			);
+			if (article && relatedArticle) {
+				return { article, relatedArticle };
+			}
+
+			console.debug(article, relatedArticle);
+			throw new Error("Error creating ArticleRelation relation!");
+		});
+
+		await articleRelationRepository.save(articleWithRelations);
 
 		/*
 		 * Add relations to ArticleTag join table and insert into database.

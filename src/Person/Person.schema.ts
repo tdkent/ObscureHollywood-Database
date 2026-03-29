@@ -5,23 +5,21 @@ const PersonSchema = z.object({
 	lastName: z.string().min(1).max(32),
 	birthYear: z.preprocess(
 		(val) => {
-			if (typeof val === "string") {
-				if (!val.length) return null;
-				return Number(val);
+			if (typeof val === "string" && !val.length) {
+				return null;
 			}
 			return val;
 		},
-		z.union([z.int(), z.null()]),
+		z.union([z.iso.date(), z.null()]),
 	),
 	deathYear: z.preprocess(
 		(val) => {
-			if (typeof val === "string") {
-				if (!val.length) return null;
-				return Number(val);
+			if (typeof val === "string" && !val.length) {
+				return null;
 			}
 			return val;
 		},
-		z.union([z.int(), z.null()]),
+		z.union([z.iso.date(), z.null()]),
 	),
 	birthLocation: z
 		.union([z.string().max(64), z.null()])

@@ -5,6 +5,7 @@ import { Person } from "./Person/Person.entity.js";
 import { PersonFilm } from "./PersonFilm/PersonFilm.entity.js";
 import { Studio } from "./Studio/Studio.entity.js";
 import "dotenv/config";
+import { ArticleRelation } from "./ArticleRelation/ArticleRelation.entity.js";
 import { ArticleTag } from "./ArticleTag/ArticleTag.entity.js";
 import { Feature } from "./Feature/Feature.entity.js";
 import { Tag } from "./Tag/Tag.entity.js";
@@ -20,6 +21,7 @@ export const AppDataSource = new DataSource({
 	logging: true,
 	entities: [
 		Article,
+		ArticleRelation,
 		ArticleTag,
 		Feature,
 		Film,
