@@ -2,6 +2,7 @@ import "reflect-metadata";
 import { Article } from "./Article/Article.entity.js";
 import { ArticleTag } from "./ArticleTag/ArticleTag.entity.js";
 import { AppDataSource } from "./data-source.js";
+import { Feature } from "./Feature/Feature.entity.js";
 import { Film } from "./Film/Film.entity.js";
 import getJsonData from "./lib/utils/getJsonData.js";
 import { Person } from "./Person/Person.entity.js";
@@ -14,14 +15,23 @@ AppDataSource.initialize()
 		/*
 		 * Get raw JSON data files.
 		 */
-		const { articles, articleTag, films, persons, personFilm, studios, tags } =
-			getJsonData();
+		const {
+			articles,
+			articleTag,
+			features,
+			films,
+			persons,
+			personFilm,
+			studios,
+			tags,
+		} = getJsonData();
 
 		/*
 		 * Get database repositories.
 		 */
 		const articleRepository = AppDataSource.getRepository(Article);
 		const articleTagRepository = AppDataSource.getRepository(ArticleTag);
+		const featureRepository = AppDataSource.getRepository(Feature);
 		const filmRepository = AppDataSource.getRepository(Film);
 		const studioRepository = AppDataSource.getRepository(Studio);
 		const personRepository = AppDataSource.getRepository(Person);
@@ -103,6 +113,20 @@ AppDataSource.initialize()
 
 		await personRepository.save(personsWithRelations);
 		const personsWithId = await personRepository.find();
+
+		/*
+		 * Add relations to Feature and insert into database.
+		 */
+		const featuresWithRelations = features.map((feature) => {
+			const article = articlesWithId.find(
+				(article) => article.slug === feature.slug,
+			);
+			if (article) return { ...feature, article };
+			return feature;
+		});
+
+		await featureRepository.save(featuresWithRelations);
+		const featuresWithId = await personRepository.find();
 
 		/*
 		 * Add relations to PersonFilm join table and insert into database.
