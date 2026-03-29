@@ -42,13 +42,13 @@ export class Person {
 	lastName: string;
 
 	@Column({
-		type: "smallint",
+		type: "date",
 		nullable: true,
 	})
 	birthYear: number;
 
 	@Column({
-		type: "smallint",
+		type: "date",
 		nullable: true,
 	})
 	deathYear: number;
