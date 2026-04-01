@@ -161,15 +161,28 @@ AppDataSource.initialize()
 			const person = personsWithId.find(
 				(person) => person.slug === file.personSlug,
 			);
+
+			if (!person) {
+				console.debug(file);
+				throw new Error(
+					"Error creating PersonFilm relation: unable to find match with person",
+				);
+			}
+
 			const film = filmsWithId.find((film) => film.slug === file.filmSlug);
-			if (person && film)
-				return {
-					...file,
-					person,
-					film,
-				};
-			console.debug(person, film);
-			throw new Error("Error creating PersonFilm relation!");
+
+			if (!film) {
+				console.debug(file);
+				throw new Error(
+					"Error creating PersonFilm relation: unable to find match with film",
+				);
+			}
+
+			return {
+				...file,
+				person,
+				film,
+			};
 		});
 
 		await personFilmRepository.save(personFilmWithRelations);

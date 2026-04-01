@@ -21,7 +21,7 @@ const PersonFilmSchema = z
 				}
 				return val;
 			},
-			z.union([z.int().min(1).max(5), z.null()]),
+			z.union([z.int().min(1).max(8), z.null()]),
 		),
 	})
 	.superRefine((data, ctx) => {
