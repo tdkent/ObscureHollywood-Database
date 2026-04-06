@@ -1,8 +1,5 @@
 import { Entity, ManyToOne, PrimaryGeneratedColumn, Unique } from "typeorm";
-import {
-	Article,
-	type Article as ArticleType,
-} from "../Article/Article.entity.js";
+import { Film, type Film as FilmType } from "../Film/Film.entity.js";
 import { Tag, type Tag as TagType } from "../Tag/Tag.entity.js";
 
 @Entity()
@@ -12,11 +9,11 @@ export class FilmTag {
 	id: number;
 
 	@ManyToOne(
-		() => Article,
-		(article) => article.articleTags,
+		() => Film,
+		(film) => film.filmTags,
 		{ onDelete: "CASCADE" },
 	)
-	article: ArticleType;
+	film: FilmType;
 
 	@ManyToOne(
 		() => Tag,

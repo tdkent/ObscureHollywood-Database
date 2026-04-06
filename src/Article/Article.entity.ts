@@ -9,10 +9,6 @@ import {
 } from "typeorm";
 import { ArticleRelation } from "../ArticleRelation/ArticleRelation.entity.js";
 import { Film, type Film as FilmType } from "../Film/Film.entity.js";
-import {
-	ArticleTag,
-	type ArticleTag as ArticleTagType,
-} from "../FilmTag/FilmTag.entity.js";
 import { Person, type Person as PersonType } from "../Person/Person.entity.js";
 
 export enum Category {
@@ -66,12 +62,6 @@ export class Article {
 		(person) => person.article,
 	)
 	person: PersonType;
-
-	@OneToMany(
-		() => ArticleTag,
-		(articleTag) => articleTag.article,
-	)
-	articleTags: ArticleTagType[];
 
 	@OneToMany(
 		() => ArticleRelation,
