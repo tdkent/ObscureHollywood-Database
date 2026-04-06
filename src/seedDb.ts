@@ -70,18 +70,31 @@ AppDataSource.initialize()
 		 * Add relations to ArticleRelation join table and insert into database.
 		 */
 		const articleWithRelations = articleRelation.map((file) => {
+			// Get id of current article
 			const article = articlesWithId.find(
 				(article) => article.slug === file.articleSlug,
 			);
+
+			if (!article) {
+				console.debug(article);
+				throw new Error(
+					"Error creating ArticleRelation relation: could not find article id!",
+				);
+			}
+
+			// Get id of related article (if any)
 			const relatedArticle = articlesWithId.find(
 				(article) => article.slug === file.relatedArticleSlug,
 			);
-			if (article && relatedArticle) {
-				return { article, relatedArticle };
+
+			if (!relatedArticle) {
+				console.debug(article);
+				throw new Error(
+					"Error creating ArticleRelation relation: could not find related article id!",
+				);
 			}
 
-			console.debug(article, relatedArticle);
-			throw new Error("Error creating ArticleRelation relation!");
+			return { article, relatedArticle };
 		});
 
 		await articleRelationRepository.save(articleWithRelations);
