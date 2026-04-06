@@ -1,10 +1,10 @@
 import "reflect-metadata";
 import { Article } from "./Article/Article.entity.js";
 import { ArticleRelation } from "./ArticleRelation/ArticleRelation.entity.js";
-import { ArticleTag } from "./ArticleTag/ArticleTag.entity.js";
 import { AppDataSource } from "./data-source.js";
 import { Feature } from "./Feature/Feature.entity.js";
 import { Film } from "./Film/Film.entity.js";
+import { FilmTag } from "./FilmTag/FilmTag.entity.js";
 import getJsonData from "./lib/utils/getJsonData.js";
 import { Person } from "./Person/Person.entity.js";
 import { PersonFilm } from "./PersonFilm/PersonFilm.entity.js";
@@ -36,7 +36,7 @@ AppDataSource.initialize()
 		const articleRepository = AppDataSource.getRepository(Article);
 		const articleRelationRepository =
 			AppDataSource.getRepository(ArticleRelation);
-		const articleTagRepository = AppDataSource.getRepository(ArticleTag);
+		const articleTagRepository = AppDataSource.getRepository(FilmTag);
 		const featureRepository = AppDataSource.getRepository(Feature);
 		const filmRepository = AppDataSource.getRepository(Film);
 		const studioRepository = AppDataSource.getRepository(Studio);

@@ -8,11 +8,11 @@ import {
 	UpdateDateColumn,
 } from "typeorm";
 import { ArticleRelation } from "../ArticleRelation/ArticleRelation.entity.js";
+import { Film, type Film as FilmType } from "../Film/Film.entity.js";
 import {
 	ArticleTag,
 	type ArticleTag as ArticleTagType,
-} from "../ArticleTag/ArticleTag.entity.js";
-import { Film, type Film as FilmType } from "../Film/Film.entity.js";
+} from "../FilmTag/FilmTag.entity.js";
 import { Person, type Person as PersonType } from "../Person/Person.entity.js";
 
 export enum Category {

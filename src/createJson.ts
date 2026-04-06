@@ -1,8 +1,8 @@
 import ArticleSchema from "./Article/Article.schema.js";
 import ArticleRelationSchema from "./ArticleRelation/ArticleRelation.schema.js";
-import ArticleTagSchema from "./ArticleTag/ArticleTag.schema.js";
 import FeatureSchema from "./Feature/Feature.schema.js";
 import FilmSchema from "./Film/Film.schema.js";
+import FilmTagSchema from "./FilmTag/FilmTag.schema.js";
 import type { ParseJsonInputs } from "./lib/types.js";
 import parseJsonFromCsv from "./lib/utils/parseJsonFromCsv.js";
 import resetOutput from "./lib/utils/resetOutput.js";
@@ -53,9 +53,9 @@ const inputs: ParseJsonInputs[] = [
 		schema: TagSchema,
 	},
 	{
-		inputCsvName: "ArticleTag-Table 1",
-		label: "ArticleTag",
-		schema: ArticleTagSchema,
+		inputCsvName: "FilmTag-Table 1",
+		label: "FilmTag",
+		schema: FilmTagSchema,
 	},
 ];
 

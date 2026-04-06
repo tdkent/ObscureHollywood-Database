@@ -7,7 +7,7 @@ import { Tag, type Tag as TagType } from "../Tag/Tag.entity.js";
 
 @Entity()
 @Unique(["article", "tag"])
-export class ArticleTag {
+export class FilmTag {
 	@PrimaryGeneratedColumn()
 	id: number;
 

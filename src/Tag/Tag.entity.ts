@@ -2,7 +2,7 @@ import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from "typeorm";
 import {
 	ArticleTag,
 	type ArticleTag as ArticleTagType,
-} from "../ArticleTag/ArticleTag.entity.js";
+} from "../FilmTag/FilmTag.entity.js";
 
 enum Type {
 	DECADE = "decade",
