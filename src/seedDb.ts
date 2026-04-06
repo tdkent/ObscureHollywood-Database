@@ -19,16 +19,14 @@ AppDataSource.initialize()
 		const {
 			articles,
 			articleRelation,
-			articleTag,
 			features,
 			films,
+			filmTag,
 			persons,
 			personFilm,
 			studios,
 			tags,
 		} = getJsonData();
-
-		console.log("articlerelation", articleRelation);
 
 		/*
 		 * Get database repositories.
@@ -36,7 +34,7 @@ AppDataSource.initialize()
 		const articleRepository = AppDataSource.getRepository(Article);
 		const articleRelationRepository =
 			AppDataSource.getRepository(ArticleRelation);
-		const articleTagRepository = AppDataSource.getRepository(FilmTag);
+		const filmTagRepository = AppDataSource.getRepository(FilmTag);
 		const featureRepository = AppDataSource.getRepository(Feature);
 		const filmRepository = AppDataSource.getRepository(Film);
 		const studioRepository = AppDataSource.getRepository(Studio);
@@ -100,24 +98,6 @@ AppDataSource.initialize()
 		await articleRelationRepository.save(articleWithRelations);
 
 		/*
-		 * Add relations to ArticleTag join table and insert into database.
-		 */
-		const articleTagWithRelations = articleTag.map((file) => {
-			const article = articlesWithId.find(
-				(article) => article.slug === file.articleSlug,
-			);
-			const tag = tagsWithId.find((tag) => tag.slug === file.tagSlug);
-			if (article && tag) {
-				return { article, tag };
-			}
-
-			console.debug(article, tag);
-			throw new Error("Error creating ArticleTag relation!");
-		});
-
-		await articleTagRepository.save(articleTagWithRelations);
-
-		/*
 		 * Add relations to Film and insert into database.
 		 */
 		const filmsWithRelations = films
@@ -138,6 +118,31 @@ AppDataSource.initialize()
 
 		await filmRepository.save(filmsWithRelations);
 		const filmsWithId = await filmRepository.find();
+
+		/*
+		 * Add relations to FilmTag join table and insert into database.
+		 */
+		const filmTagWithRelations = filmTag.map((file) => {
+			const film = filmsWithId.find((film) => film.slug === file.filmSlug);
+
+			if (!film) {
+				console.debug(file);
+				throw new Error(
+					"Error creating FilmTag relation: could not find film!",
+				);
+			}
+
+			const tag = tagsWithId.find((tag) => tag.slug === file.tagSlug);
+
+			if (!tag) {
+				console.debug(file);
+				throw new Error("Error creating FilmTag relation: could not find tag!");
+			}
+
+			return { film, tag };
+		});
+
+		await filmTagRepository.save(filmTagWithRelations);
 
 		/*
 		 * Add relations to Person and insert into database.
@@ -165,7 +170,6 @@ AppDataSource.initialize()
 		});
 
 		await featureRepository.save(featuresWithRelations);
-		const featuresWithId = await personRepository.find();
 
 		/*
 		 * Add relations to PersonFilm join table and insert into database.

@@ -4,7 +4,7 @@ import type { Article } from "../../Article/Article.entity.js";
 import type { ArticleRelation } from "../../ArticleRelation/ArticleRelation.entity.js";
 import type { Feature } from "../../Feature/Feature.entity.js";
 import type { Film } from "../../Film/Film.entity.js";
-import type { ArticleTag } from "../../FilmTag/FilmTag.entity.js";
+import type { FilmTag } from "../../FilmTag/FilmTag.entity.js";
 import type { Person } from "../../Person/Person.entity.js";
 import type { PersonFilm } from "../../PersonFilm/PersonFilm.entity.js";
 import type { Studio } from "../../Studio/Studio.entity.js";
@@ -29,26 +29,26 @@ export default function getJsonData() {
 		__dirname,
 		`${folderPath}/ArticleRelation`,
 	);
-	const articleTagFolder = path.join(__dirname, `${folderPath}/ArticleTag`);
 	const featuresFolder = path.join(__dirname, `${folderPath}/Feature`);
 	const filmsFolder = path.join(__dirname, `${folderPath}/Film`);
 	const studiosFolder = path.join(__dirname, `${folderPath}/Studio`);
 	const personsFolder = path.join(__dirname, `${folderPath}/Person`);
 	const personFilmFolder = path.join(__dirname, `${folderPath}/PersonFilm`);
 	const tagsFolder = path.join(__dirname, `${folderPath}/Tag`);
+	const filmTagFolder = path.join(__dirname, `${folderPath}/FilmTag`);
 
 	/*
 	 * Get JSON files from folders
 	 */
 	const articleFiles = fs.readdirSync(articlesFolder);
 	const articleRelationFiles = fs.readdirSync(articleRelationFolder);
-	const articleTagFiles = fs.readdirSync(articleTagFolder);
 	const featureFiles = fs.readdirSync(featuresFolder);
 	const filmFiles = fs.readdirSync(filmsFolder);
 	const studioFiles = fs.readdirSync(studiosFolder);
 	const personFiles = fs.readdirSync(personsFolder);
 	const personFilmFiles = fs.readdirSync(personFilmFolder);
 	const tagFiles = fs.readdirSync(tagsFolder);
+	const filmTagFiles = fs.readdirSync(filmTagFolder);
 
 	/*
 	 * Parse JSON files into string arrays
@@ -66,12 +66,6 @@ export default function getJsonData() {
 		const raw = fs.readFileSync(filePath, "utf-8");
 		return JSON.parse(raw);
 	});
-	const articleTag: (ArticleTag & { articleSlug: string; tagSlug: string })[] =
-		articleTagFiles.map((file) => {
-			const filePath = path.join(articleTagFolder, file);
-			const raw = fs.readFileSync(filePath, "utf-8");
-			return JSON.parse(raw);
-		});
 	const features: Feature[] = featureFiles.map((file) => {
 		const filePath = path.join(featuresFolder, file);
 		const raw = fs.readFileSync(filePath, "utf-8");
@@ -103,13 +97,19 @@ export default function getJsonData() {
 		const raw = fs.readFileSync(filePath, "utf-8");
 		return JSON.parse(raw);
 	});
+	const filmTag: (FilmTag & { filmSlug: string; tagSlug: string })[] =
+		filmTagFiles.map((file) => {
+			const filePath = path.join(filmTagFolder, file);
+			const raw = fs.readFileSync(filePath, "utf-8");
+			return JSON.parse(raw);
+		});
 
 	return {
 		articles,
 		articleRelation,
-		articleTag,
 		features,
 		films,
+		filmTag,
 		persons,
 		personFilm,
 		studios,

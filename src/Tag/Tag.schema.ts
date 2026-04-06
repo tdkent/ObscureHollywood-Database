@@ -9,7 +9,7 @@ const TagSchema = z.object({
 			}
 			return val;
 		},
-		z.enum(["decade", "director", "genre", "theme"]),
+		z.enum(["decade", "genre", "production", "theme"]),
 	),
 });
 
