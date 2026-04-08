@@ -6,23 +6,23 @@ import { PersonFilm } from "./PersonFilm/PersonFilm.entity.js";
 import { Studio } from "./Studio/Studio.entity.js";
 import "dotenv/config";
 import { ArticleRelation } from "./ArticleRelation/ArticleRelation.entity.js";
-import { ArticleTag } from "./ArticleTag/ArticleTag.entity.js";
 import { Feature } from "./Feature/Feature.entity.js";
+import { FilmTag } from "./FilmTag/FilmTag.entity.js";
 import { Tag } from "./Tag/Tag.entity.js";
 
 export const AppDataSource = new DataSource({
 	type: "postgres",
 	host: "localhost",
 	port: 5432,
-	username: "postgres",
+	username: process.env["PG_USERNAME"] as string,
 	password: process.env["PG_PASSWORD"] as string,
-	database: "oh-test",
+	database: process.env["PG_DATABASE"] as string,
 	synchronize: true,
 	logging: true,
 	entities: [
 		Article,
 		ArticleRelation,
-		ArticleTag,
+		FilmTag,
 		Feature,
 		Film,
 		Person,

@@ -3,9 +3,9 @@ import type * as z from "zod";
 export type Labels =
 	| "Article"
 	| "ArticleRelation"
-	| "ArticleTag"
 	| "Feature"
 	| "Film"
+	| "FilmTag"
 	| "Person"
 	| "PersonFilm"
 	| "Studio"

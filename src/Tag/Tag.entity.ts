@@ -1,13 +1,13 @@
 import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from "typeorm";
 import {
-	ArticleTag,
-	type ArticleTag as ArticleTagType,
-} from "../ArticleTag/ArticleTag.entity.js";
+	FilmTag,
+	type FilmTag as FilmTagType,
+} from "../FilmTag/FilmTag.entity.js";
 
 enum Type {
 	DECADE = "decade",
-	DIRECTOR = "director",
 	GENRE = "genre",
+	PRODUCTION = "production",
 	THEME = "theme",
 }
 
@@ -36,8 +36,8 @@ export class Tag {
 	type: Type;
 
 	@OneToMany(
-		() => ArticleTag,
-		(articleTag) => articleTag.tag,
+		() => FilmTag,
+		(filmTag) => filmTag.tag,
 	)
-	articleTags: ArticleTagType[];
+	filmTags: FilmTagType[];
 }

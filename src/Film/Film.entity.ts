@@ -14,6 +14,10 @@ import {
 	type Article as ArticleType,
 } from "../Article/Article.entity.js";
 import {
+	FilmTag,
+	type FilmTag as FilmTagType,
+} from "../FilmTag/FilmTag.entity.js";
+import {
 	PersonFilm,
 	type PersonFilm as PersonFilmType,
 } from "../PersonFilm/PersonFilm.entity.js";
@@ -79,4 +83,10 @@ export class Film {
 		(pf) => pf.film,
 	)
 	personFilms: PersonFilmType[];
+
+	@OneToMany(
+		() => FilmTag,
+		(filmTag) => filmTag.film,
+	)
+	filmTags: FilmTagType[];
 }

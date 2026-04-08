@@ -1,26 +1,23 @@
 import { Entity, ManyToOne, PrimaryGeneratedColumn, Unique } from "typeorm";
-import {
-	Article,
-	type Article as ArticleType,
-} from "../Article/Article.entity.js";
+import { Film, type Film as FilmType } from "../Film/Film.entity.js";
 import { Tag, type Tag as TagType } from "../Tag/Tag.entity.js";
 
 @Entity()
-@Unique(["article", "tag"])
-export class ArticleTag {
+@Unique(["film", "tag"])
+export class FilmTag {
 	@PrimaryGeneratedColumn()
 	id: number;
 
 	@ManyToOne(
-		() => Article,
-		(article) => article.articleTags,
+		() => Film,
+		(film) => film.filmTags,
 		{ onDelete: "CASCADE" },
 	)
-	article: ArticleType;
+	film: FilmType;
 
 	@ManyToOne(
 		() => Tag,
-		(tag) => tag.articleTags,
+		(tag) => tag.filmTags,
 		{ onDelete: "CASCADE" },
 	)
 	tag: TagType;

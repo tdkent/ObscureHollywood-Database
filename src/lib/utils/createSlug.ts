@@ -1,8 +1,8 @@
 import ArticleSchema from "../../Article/Article.schema.js";
 import ArticleRelationSchema from "../../ArticleRelation/ArticleRelation.schema.js";
-import ArticleTagSchema from "../../ArticleTag/ArticleTag.schema.js";
 import FeatureSchema from "../../Feature/Feature.schema.js";
 import FilmSchema from "../../Film/Film.schema.js";
+import FilmTagSchema from "../../FilmTag/FilmTag.schema.js";
 import PersonSchema from "../../Person/Person.schema.js";
 import PersonFilmSchema from "../../PersonFilm/PersonFilm.schema.js";
 import StudioSchema from "../../Studio/Studio.schema.js";
@@ -46,16 +46,6 @@ export default function createSlug({ item, label }: Inputs) {
 		slugParts = `${result.data.articleSlug} ${result.data.relatedArticleSlug}`;
 	}
 
-	if (label === "ArticleTag") {
-		const result = ArticleTagSchema.safeParse(item);
-		if (!result.success) {
-			console.debug(result);
-			throw new Error(errMsg);
-		}
-
-		slugParts = `${result.data.articleSlug} ${result.data.tagSlug}`;
-	}
-
 	if (label === "Feature") {
 		const result = FeatureSchema.safeParse(item);
 		if (!result.success) {
@@ -74,6 +64,16 @@ export default function createSlug({ item, label }: Inputs) {
 		}
 
 		slugParts = `${result.data.name} ${result.data.releaseYear}`;
+	}
+
+	if (label === "FilmTag") {
+		const result = FilmTagSchema.safeParse(item);
+		if (!result.success) {
+			console.debug(result);
+			throw new Error(errMsg);
+		}
+
+		slugParts = `${result.data.filmSlug} ${result.data.tagSlug}`;
 	}
 
 	if (label === "Person") {
