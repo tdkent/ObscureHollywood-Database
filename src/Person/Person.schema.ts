@@ -3,7 +3,7 @@ import * as z from "zod";
 const PersonSchema = z.object({
 	firstName: z.string().min(1).max(32),
 	lastName: z.string().min(1).max(32),
-	birthYear: z.preprocess(
+	birthDate: z.preprocess(
 		(val) => {
 			if (typeof val === "string" && !val.length) {
 				return null;
@@ -12,7 +12,7 @@ const PersonSchema = z.object({
 		},
 		z.union([z.iso.date(), z.null()]),
 	),
-	deathYear: z.preprocess(
+	deathDate: z.preprocess(
 		(val) => {
 			if (typeof val === "string" && !val.length) {
 				return null;
@@ -21,10 +21,10 @@ const PersonSchema = z.object({
 		},
 		z.union([z.iso.date(), z.null()]),
 	),
-	birthLocation: z
+	birthPlace: z
 		.union([z.string().max(64), z.null()])
 		.transform((val) => val || null),
-	deathLocation: z
+	deathPlace: z
 		.union([z.string().max(64), z.null()])
 		.transform((val) => val || null),
 });
