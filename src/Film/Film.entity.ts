@@ -52,16 +52,6 @@ export class Film {
 	})
 	releaseYear: number;
 
-	@Column({
-		type: "boolean",
-	})
-	isSilent: boolean;
-
-	@Column({
-		type: "boolean",
-	})
-	isPreCode: boolean;
-
 	@CreateDateColumn()
 	createdAt: Date;
 
