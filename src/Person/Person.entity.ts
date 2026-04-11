@@ -45,13 +45,13 @@ export class Person {
 		type: "date",
 		nullable: true,
 	})
-	birthYear: number;
+	birthDate: Date;
 
 	@Column({
 		type: "date",
 		nullable: true,
 	})
-	deathYear: number;
+	deathDate: Date;
 
 	@Column({
 		type: "varchar",
