@@ -2,6 +2,7 @@ import fs from "node:fs";
 import path from "node:path";
 import Papa from "papaparse";
 import type * as z from "zod";
+import type { Person } from "../../Person/Person.entity.js";
 import type { ParseJsonInputs } from "../types.js";
 import createSlug from "./createSlug.js";
 import getDirname from "./getDirname.js";
@@ -18,7 +19,7 @@ export default function parseJsonFromCsv({
 	 * Data types derived from Zod schema.
 	 */
 	type SchemaType = z.infer<typeof schema>;
-	type SchemaTypeWithSlug = SchemaType & { slug: string };
+	type SchemaTypeWithSlug = SchemaType & { slug: string; fullName?: string };
 
 	/*
 	 * Get input and output paths.
@@ -59,11 +60,18 @@ export default function parseJsonFromCsv({
 					throw new Error(`Validation error in Film`);
 				}
 
-				const slug = createSlug({ item: result.data, label });
-
-				const addSlug = { slug, ...result.data };
-
-				validatedDataWithSlug.push(addSlug);
+				// Create name in Person entity
+				if (label === "Person") {
+					const person = item as unknown as Person;
+					const name = `${person.firstName} ${person.lastName}`;
+					const slug = createSlug({ item: result.data, label });
+					const addSlugAndName = { slug, name, ...result.data };
+					validatedDataWithSlug.push(addSlugAndName);
+				} else {
+					const slug = createSlug({ item: result.data, label });
+					const addSlug = { slug, ...result.data };
+					validatedDataWithSlug.push(addSlug);
+				}
 			}
 
 			/*
