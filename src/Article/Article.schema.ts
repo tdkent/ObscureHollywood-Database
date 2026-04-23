@@ -10,6 +10,7 @@ const ArticleSchema = z.object({
 		},
 		z.enum(["feature", "film", "person"]),
 	),
+	name: z.string().min(1).max(64),
 	slug: z.string().min(1).max(64),
 	htmlContent: z.string().min(1),
 	textContent: z.string().min(1),
