@@ -11,6 +11,7 @@ const TagSchema = z.object({
 		},
 		z.enum(["decade", "genre", "production", "theme"]),
 	),
+	description: z.string().min(1).max(240),
 });
 
 export default TagSchema;

@@ -42,6 +42,12 @@ export class Tag {
 	})
 	type: Type;
 
+	@Column({
+		type: "varchar",
+		length: 240,
+	})
+	description: string;
+
 	@CreateDateColumn()
 	createdAt: Date;
 

@@ -21,6 +21,18 @@ const PersonSchema = z.object({
 		},
 		z.union([z.iso.date(), z.null()]),
 	),
+	age: z.preprocess(
+		(val) => {
+			if (typeof val === "string") {
+				if (!val.length) {
+					return null;
+				}
+				return Number(val);
+			}
+			return null;
+		},
+		z.union([z.int().min(10).max(110), z.null()]),
+	),
 	birthPlace: z
 		.union([z.string().max(64), z.null()])
 		.transform((val) => val || null),
