@@ -19,6 +19,7 @@ export default async function resetOutput() {
 		"json/Film",
 		"json/Person",
 		"json/PersonFilm",
+		"json/Quiz",
 		"json/Studio",
 		"json/Tag",
 	];

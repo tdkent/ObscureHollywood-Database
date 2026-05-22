@@ -8,6 +8,7 @@ export type Labels =
 	| "FilmTag"
 	| "Person"
 	| "PersonFilm"
+	| "Quiz"
 	| "Studio"
 	| "Tag";
 
