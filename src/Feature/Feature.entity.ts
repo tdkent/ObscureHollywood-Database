@@ -26,7 +26,6 @@ export class Feature {
 	@Column({
 		type: "varchar",
 		length: 64,
-		nullable: true,
 	})
 	subtitle: string;
 

@@ -8,6 +8,7 @@ import { FilmTag } from "./FilmTag/FilmTag.entity.js";
 import getJsonData from "./lib/utils/getJsonData.js";
 import { Person } from "./Person/Person.entity.js";
 import { PersonFilm } from "./PersonFilm/PersonFilm.entity.js";
+import { Quiz } from "./Quiz/Quiz.entity.js";
 import { Studio } from "./Studio/Studio.entity.js";
 import { Tag } from "./Tag/Tag.entity.js";
 
@@ -24,6 +25,7 @@ AppDataSource.initialize()
 			filmTag,
 			persons,
 			personFilm,
+			quiz,
 			studios,
 			tags,
 		} = getJsonData();
@@ -40,6 +42,7 @@ AppDataSource.initialize()
 		const studioRepository = AppDataSource.getRepository(Studio);
 		const personRepository = AppDataSource.getRepository(Person);
 		const personFilmRepository = AppDataSource.getRepository(PersonFilm);
+		const quizRepository = AppDataSource.getRepository(Quiz);
 		const tagRepository = AppDataSource.getRepository(Tag);
 
 		/*
@@ -52,6 +55,7 @@ AppDataSource.initialize()
 		await AppDataSource.query(
 			"TRUNCATE TABLE article RESTART IDENTITY CASCADE;",
 		);
+		await AppDataSource.query("TRUNCATE TABLE quiz RESTART IDENTITY CASCADE;");
 
 		/*
 		 * Insert and retrieve data w/o relations.
@@ -59,6 +63,7 @@ AppDataSource.initialize()
 		await articleRepository.save(articles);
 		await studioRepository.save(studios);
 		await tagRepository.save(tags);
+		await quizRepository.save(quiz);
 
 		const articlesWithId = await articleRepository.find();
 		const studiosWithId = await studioRepository.find();
