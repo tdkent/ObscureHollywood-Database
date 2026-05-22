@@ -5,6 +5,7 @@ import FilmSchema from "../../Film/Film.schema.js";
 import FilmTagSchema from "../../FilmTag/FilmTag.schema.js";
 import PersonSchema from "../../Person/Person.schema.js";
 import PersonFilmSchema from "../../PersonFilm/PersonFilm.schema.js";
+import QuizSchema from "../../Quiz/Quiz.schema.js";
 import StudioSchema from "../../Studio/Studio.schema.js";
 import TagSchema from "../../Tag/Tag.schema.js";
 import slugify from "../imports/slugify.js";
@@ -94,6 +95,16 @@ export default function createSlug({ item, label }: Inputs) {
 		}
 
 		slugParts = `${result.data.filmSlug} ${result.data.personSlug} ${result.data.role}`;
+	}
+
+	if (label === "Quiz") {
+		const result = QuizSchema.safeParse(item);
+		if (!result.success) {
+			console.debug(result);
+			throw new Error(errMsg);
+		}
+
+		slugParts = `${result.data.name}`;
 	}
 
 	if (label === "Studio") {

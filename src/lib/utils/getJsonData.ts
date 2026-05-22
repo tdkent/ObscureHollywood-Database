@@ -7,6 +7,7 @@ import type { Film } from "../../Film/Film.entity.js";
 import type { FilmTag } from "../../FilmTag/FilmTag.entity.js";
 import type { Person } from "../../Person/Person.entity.js";
 import type { PersonFilm } from "../../PersonFilm/PersonFilm.entity.js";
+import type { Quiz } from "../../Quiz/Quiz.entity.js";
 import type { Studio } from "../../Studio/Studio.entity.js";
 import type { Tag } from "../../Tag/Tag.entity.js";
 import getDirname from "./getDirname.js";
@@ -34,6 +35,7 @@ export default function getJsonData() {
 	const studiosFolder = path.join(__dirname, `${folderPath}/Studio`);
 	const personsFolder = path.join(__dirname, `${folderPath}/Person`);
 	const personFilmFolder = path.join(__dirname, `${folderPath}/PersonFilm`);
+	const quizFolder = path.join(__dirname, `${folderPath}/Quiz`);
 	const tagsFolder = path.join(__dirname, `${folderPath}/Tag`);
 	const filmTagFolder = path.join(__dirname, `${folderPath}/FilmTag`);
 
@@ -47,6 +49,7 @@ export default function getJsonData() {
 	const studioFiles = fs.readdirSync(studiosFolder);
 	const personFiles = fs.readdirSync(personsFolder);
 	const personFilmFiles = fs.readdirSync(personFilmFolder);
+	const quizFiles = fs.readdirSync(quizFolder);
 	const tagFiles = fs.readdirSync(tagsFolder);
 	const filmTagFiles = fs.readdirSync(filmTagFolder);
 
@@ -86,6 +89,11 @@ export default function getJsonData() {
 		const raw = fs.readFileSync(filePath, "utf-8");
 		return JSON.parse(raw);
 	});
+	const quiz: Quiz[] = quizFiles.map((file) => {
+		const filePath = path.join(quizFolder, file);
+		const raw = fs.readFileSync(filePath, "utf-8");
+		return JSON.parse(raw);
+	});
 	const personFilm: (PersonFilm & { personSlug: string; filmSlug: string })[] =
 		personFilmFiles.map((file) => {
 			const filePath = path.join(personFilmFolder, file);
@@ -112,6 +120,7 @@ export default function getJsonData() {
 		filmTag,
 		persons,
 		personFilm,
+		quiz,
 		studios,
 		tags,
 	};

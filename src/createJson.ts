@@ -8,6 +8,7 @@ import parseJsonFromCsv from "./lib/utils/parseJsonFromCsv.js";
 import resetOutput from "./lib/utils/resetOutput.js";
 import PersonSchema from "./Person/Person.schema.js";
 import PersonFilmSchema from "./PersonFilm/PersonFilm.schema.js";
+import QuizSchema from "./Quiz/Quiz.schema.js";
 import StudioSchema from "./Studio/Studio.schema.js";
 import TagSchema from "./Tag/Tag.schema.js";
 
@@ -41,6 +42,11 @@ const inputs: ParseJsonInputs[] = [
 		inputCsvName: "PersonFilm-Table 1",
 		label: "PersonFilm",
 		schema: PersonFilmSchema,
+	},
+	{
+		inputCsvName: "Quiz-Table 1",
+		label: "Quiz",
+		schema: QuizSchema,
 	},
 	{
 		inputCsvName: "Studio-Table 1",
