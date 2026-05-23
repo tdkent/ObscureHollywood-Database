@@ -2,9 +2,11 @@ import {
 	Column,
 	CreateDateColumn,
 	Entity,
+	JoinColumn,
 	PrimaryGeneratedColumn,
 	UpdateDateColumn,
 } from "typeorm";
+import type { QuizQuestion } from "../QuizQuestion/QuizQuestion.entity.js";
 
 export enum Theme {
 	FILMS = "films",
@@ -42,4 +44,7 @@ export class Quiz {
 
 	@UpdateDateColumn()
 	updatedAt: Date;
+
+	@JoinColumn()
+	quizQuestions: QuizQuestion[];
 }
