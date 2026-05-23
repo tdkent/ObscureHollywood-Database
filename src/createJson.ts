@@ -9,6 +9,7 @@ import resetOutput from "./lib/utils/resetOutput.js";
 import PersonSchema from "./Person/Person.schema.js";
 import PersonFilmSchema from "./PersonFilm/PersonFilm.schema.js";
 import QuizSchema from "./Quiz/Quiz.schema.js";
+import QuizQuestionSchema from "./QuizQuestion/QuizQuestion.schema.js";
 import StudioSchema from "./Studio/Studio.schema.js";
 import TagSchema from "./Tag/Tag.schema.js";
 
@@ -47,6 +48,11 @@ const inputs: ParseJsonInputs[] = [
 		inputCsvName: "Quiz-Table 1",
 		label: "Quiz",
 		schema: QuizSchema,
+	},
+	{
+		inputCsvName: "QuizQuestion-Table 1",
+		label: "QuizQuestion",
+		schema: QuizQuestionSchema,
 	},
 	{
 		inputCsvName: "Studio-Table 1",
