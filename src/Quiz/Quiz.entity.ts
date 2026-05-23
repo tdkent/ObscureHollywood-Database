@@ -3,10 +3,11 @@ import {
 	CreateDateColumn,
 	Entity,
 	JoinColumn,
+	OneToMany,
 	PrimaryGeneratedColumn,
 	UpdateDateColumn,
 } from "typeorm";
-import type { QuizQuestion } from "../QuizQuestion/QuizQuestion.entity.js";
+import { QuizQuestion } from "../QuizQuestion/QuizQuestion.entity.js";
 
 export enum Theme {
 	FILMS = "films",
@@ -45,6 +46,13 @@ export class Quiz {
 	@UpdateDateColumn()
 	updatedAt: Date;
 
+	@OneToMany(
+		() => QuizQuestion,
+		(qq) => qq.quiz,
+		{
+			onDelete: "CASCADE",
+		},
+	)
 	@JoinColumn()
 	quizQuestions: QuizQuestion[];
 }

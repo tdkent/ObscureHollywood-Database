@@ -9,6 +9,7 @@ import getJsonData from "./lib/utils/getJsonData.js";
 import { Person } from "./Person/Person.entity.js";
 import { PersonFilm } from "./PersonFilm/PersonFilm.entity.js";
 import { Quiz } from "./Quiz/Quiz.entity.js";
+import { QuizQuestion } from "./QuizQuestion/QuizQuestion.entity.js";
 import { Studio } from "./Studio/Studio.entity.js";
 import { Tag } from "./Tag/Tag.entity.js";
 
@@ -26,6 +27,7 @@ AppDataSource.initialize()
 			persons,
 			personFilm,
 			quiz,
+			quizQuestion,
 			studios,
 			tags,
 		} = getJsonData();
@@ -43,6 +45,7 @@ AppDataSource.initialize()
 		const personRepository = AppDataSource.getRepository(Person);
 		const personFilmRepository = AppDataSource.getRepository(PersonFilm);
 		const quizRepository = AppDataSource.getRepository(Quiz);
+		const quizQuestionRepository = AppDataSource.getRepository(QuizQuestion);
 		const tagRepository = AppDataSource.getRepository(Tag);
 
 		/*
@@ -68,6 +71,7 @@ AppDataSource.initialize()
 		const articlesWithId = await articleRepository.find();
 		const studiosWithId = await studioRepository.find();
 		const tagsWithId = await tagRepository.find();
+		const quizzesWithId = await quizRepository.find();
 
 		/*
 		 * Add relations to ArticleRelation join table and insert into database.
@@ -208,5 +212,27 @@ AppDataSource.initialize()
 		});
 
 		await personFilmRepository.save(personFilmWithRelations);
+
+		/*
+		 * Add relations to QuizQuestions table and insert into database.
+		 */
+		const quizQuestionWithRelations = quizQuestion.map((file) => {
+			const quiz = quizzesWithId.find((quiz) => quiz.slug === file.quizSlug);
+
+			if (!quiz) {
+				console.debug(file);
+				throw new Error(
+					"Error creating QuizQuestion relation: unable to find match with quiz",
+				);
+			}
+
+			return {
+				...file,
+				answerOptions: JSON.parse(file.answerOptions as unknown as string),
+				quiz,
+			};
+		});
+
+		await quizQuestionRepository.save(quizQuestionWithRelations);
 	})
 	.catch((error) => console.log("Error: ", error));
