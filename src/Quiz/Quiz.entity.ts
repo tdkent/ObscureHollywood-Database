@@ -64,5 +64,5 @@ export class Quiz {
 			onDelete: "CASCADE",
 		},
 	)
-	quizResult: QuizResult;
+	quizResult: QuizResult[];
 }
