@@ -8,6 +8,7 @@ import {
 	UpdateDateColumn,
 } from "typeorm";
 import { QuizQuestion } from "../QuizQuestion/QuizQuestion.entity.js";
+import { QuizResult } from "../QuizResult/QuizResult.entity.js";
 
 export enum Theme {
 	FILMS = "films",
@@ -55,4 +56,13 @@ export class Quiz {
 	)
 	@JoinColumn()
 	quizQuestions: QuizQuestion[];
+
+	@OneToMany(
+		() => QuizResult,
+		(qr) => qr.quiz,
+		{
+			onDelete: "CASCADE",
+		},
+	)
+	quizResult: QuizResult;
 }
