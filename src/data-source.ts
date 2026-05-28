@@ -10,6 +10,7 @@ import { Feature } from "./Feature/Feature.entity.js";
 import { FilmTag } from "./FilmTag/FilmTag.entity.js";
 import { Quiz } from "./Quiz/Quiz.entity.js";
 import { QuizQuestion } from "./QuizQuestion/QuizQuestion.entity.js";
+import { QuizResult } from "./QuizResult/QuizResult.entity.js";
 import { Tag } from "./Tag/Tag.entity.js";
 
 export const AppDataSource = new DataSource({
@@ -31,6 +32,7 @@ export const AppDataSource = new DataSource({
 		PersonFilm,
 		Quiz,
 		QuizQuestion,
+		QuizResult,
 		Studio,
 		Tag,
 	],
